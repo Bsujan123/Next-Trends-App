@@ -20,6 +20,13 @@ class AllProductsSection extends Component {
   state = {
     productsList: [],
     isLoading: false,
+    text:''
+  }
+  searching = (event) => {
+    
+    this.setState({text:event.target.value})
+   
+  
   }
 
   componentDidMount() {
@@ -41,6 +48,7 @@ class AllProductsSection extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok) {
       const fetchedData = await response.json()
+      console.log(fetchedData.products)
       const updatedData = fetchedData.products.map(product => ({
         title: product.title,
         brand: product.brand,
@@ -57,12 +65,14 @@ class AllProductsSection extends Component {
   }
 
   renderProductsList = () => {
-    const {productsList} = this.state
+    const {productsList,text} = this.state
+    const searchResult =  productsList.filter((each => each.title.toLowerCase().includes(text.toLowerCase())))
     return (
       <>
-        <h1 className="products-heading">All Products</h1>
-        <ul className="products-list">
-          {productsList.map(product => (
+      <h1 className="products-heading">All Products</h1>
+        <input type ="text" onChange={this.searching} value={text} placeholder="Search for Products,Brands and More" className="search-box"/>
+      <ul className="products-list">
+          {searchResult.map(product => (
             <ProductCard productData={product} key={product.id} />
           ))}
         </ul>
