@@ -24,3 +24,7 @@
     flex-wrap: wrap;
     padding-left: 0;
 }
+.search-box{
+    width: 60%;
+    height:30px;
+}
