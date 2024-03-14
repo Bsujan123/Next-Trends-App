@@ -86,7 +86,7 @@
     color: #475569;
 }
 
-.username-input-filed {
+.username-input-field {
     font-size: 14px;
     height: 40px;
     border: 1px solid #d7dfe9;
@@ -97,7 +97,7 @@
     padding: 8px 16px 8px 16px;
 }
 
-.password-input-filed {
+.password-input-field {
     font-size: 14px;
     height: 40px;
     border: 1px solid #d7dfe9;
@@ -120,6 +120,7 @@
     background-color: #0b69ff;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
 }
 
 .error-message {

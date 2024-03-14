@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {Redirect} from 'react-router-dom'
 
 import './index.css'
 
@@ -7,37 +8,8 @@ class LoginForm extends Component {
   state = {
     username: '',
     password: '',
-  }
-
-  onSubmitSuccess = (jwtToken) => {
-    const {history} = this.props 
-    Cookies.set('jwt_token', jwtToken, {expires: 30})
-    history.replace("/")
-    console.log(jwtToken)
-  
-  }
-
-  onSubmitFailure = errorMsg => {
-    this.setState({showSubmitError: true, errorMsg})
-  }
-
-  submitForm = async (event) => {
-    event.preventDefault()
-    const {username,password} = this.state 
-    const userDetails = {username,password}
-   const url = 'https://apis.ccbp.in/login'
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(userDetails),
-    }
-    const response = await fetch(url, options)
-    const data = await response.json()
-    if (response.ok === true) {
-      this.onSubmitSuccess(data)
-    } else {
-      this.onSubmitFailure(data.error_msg)
-    }
-
+    showSubmitError: false,
+    errorMsg: '',
   }
 
   onChangeUsername = event => {
@@ -46,6 +18,37 @@ class LoginForm extends Component {
 
   onChangePassword = event => {
     this.setState({password: event.target.value})
+  }
+
+  onSubmitSuccess = jwtToken => {
+    const {history} = this.props
+
+    Cookies.set('jwt_token', jwtToken, {
+      expires: 30,
+    })
+    history.replace('/')
+  }
+
+  onSubmitFailure = errorMsg => {
+    this.setState({showSubmitError: true, errorMsg})
+  }
+
+  submitForm = async event => {
+    event.preventDefault()
+    const {username, password} = this.state
+    const userDetails = {username, password}
+    const url = 'https://apis.ccbp.in/login'
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(userDetails),
+    }
+    const response = await fetch(url, options)
+    const data = await response.json()
+    if (response.ok === true) {
+      this.onSubmitSuccess(data.jwt_token)
+    } else {
+      this.onSubmitFailure(data.error_msg)
+    }
   }
 
   renderPasswordField = () => {
@@ -58,7 +61,7 @@ class LoginForm extends Component {
         <input
           type="password"
           id="password"
-          className="password-input-filed"
+          className="password-input-field"
           value={password}
           onChange={this.onChangePassword}
         />
@@ -76,7 +79,7 @@ class LoginForm extends Component {
         <input
           type="text"
           id="username"
-          className="username-input-filed"
+          className="username-input-field"
           value={username}
           onChange={this.onChangeUsername}
         />
@@ -85,7 +88,11 @@ class LoginForm extends Component {
   }
 
   render() {
-     const {showSubmitError, errorMsg} = this.state
+    const {showSubmitError, errorMsg} = this.state
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="login-form-container">
         <img
@@ -98,7 +105,7 @@ class LoginForm extends Component {
           className="login-image"
           alt="website login"
         />
-        <form className="form-container" onSubmit={(event)=>this.submitForm(event)}>
+        <form className="form-container" onSubmit={this.submitForm}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
             className="login-website-logo-desktop-image"
@@ -109,7 +116,7 @@ class LoginForm extends Component {
           <button type="submit" className="login-button">
             Login
           </button>
-           {showSubmitError && <p className="error-message">*{errorMsg}</p>}
+          {showSubmitError && <p className="error-message">*{errorMsg}</p>}
         </form>
       </div>
     )

@@ -14,7 +14,7 @@
     .home-container {
         flex-direction: row;
         justify-content: space-between;
-        padding-top: 50px;
+        padding-top: 96px;
     }
 }
 
@@ -87,7 +87,7 @@
 }
 
 .shop-now-button {
-    width: 60%;
+    width: 150px;
     font-size: 14px;
     font-weight: 400;
     font-family: 'Roboto';
@@ -98,11 +98,11 @@
     border-radius: 6px;
     background-color: #0967d2;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
     .shop-now-button {
-        width: 150px;
         font-size: 16px;
     }
 }
