@@ -1,85 +1,70 @@
-import {Component} from 'react'
-import {Rings} from 'react-loader-spinner'
-import Cookies from 'js-cookie'
+import React, { useEffect, useState } from 'react';
+import { Rings } from 'react-loader-spinner';
 
-import ProductCard from '../ProductCard'
-import './index.css'
+import ProductCard from '../ProductCard';
+import './index.css';
 
-// const sortbyOptions = [
-//   {
-//     optionId: 'PRICE_HIGH',
-//     displayText: 'Price (High-Low)',
-//   },
-//   {
-//     optionId: 'PRICE_LOW',
-//     displayText: 'Price (Low-High)',
-//   },
-// ]
+const AllProductsSection = () => {
+  const [productsList, setProductsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState('');
 
-class AllProductsSection extends Component {
-  state = {
-    productsList: [],
-    isLoading: false,
-  }
+  const searching = (event) => {
+    setText(event.target.value);
+  };
 
-  componentDidMount() {
-    this.getProducts()
-  }
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-  getProducts = async () => {
-    this.setState({
-      isLoading: true,
-    })
-    const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = 'https://apis.ccbp.in/products'
-    const options = {
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      method: 'GET',
-    }
-    const response = await fetch(apiUrl, options)
+  const getProducts = async () => {
+    setIsLoading(true);
+    
+    const apiUrl = 'https://fakestoreapi.com/products';
+  
+
+    const response = await fetch(apiUrl);
     if (response.ok) {
-      const fetchedData = await response.json()
-      const updatedData = fetchedData.products.map(product => ({
-        title: product.title,
-        brand: product.brand,
-        price: product.price,
-        id: product.id,
-        imageUrl: product.image_url,
-        rating: product.rating,
-      }))
-      this.setState({
-        productsList: updatedData,
-        isLoading: false,
-      })
+      const fetchedData = await response.json();
+      
+      setProductsList(fetchedData);
     }
-  }
+    setIsLoading(false);
+  };
 
-  renderProductsList = () => {
-    const {productsList} = this.state
+  const renderProductsList = () => {
+    const searchResult = productsList.filter(product =>
+      product.title.toLowerCase().includes(text.toLowerCase())
+    );
+    console.log(productsList)
+
     return (
       <>
         <h1 className="products-heading">All Products</h1>
+        <input
+          type="text"
+          onChange={searching}
+          value={text}
+          placeholder="Search for Products, Brands and More"
+          className="search-box"
+        />
         <ul className="products-list">
-          {productsList.map(product => (
+          {searchResult.map(product => (
             <ProductCard productData={product} key={product.id} />
           ))}
         </ul>
       </>
-    )
-  }
+    );
+  };
 
-  renderLoader = () => (
+  const renderLoader = () => (
     <div className="products-loader-container">
       <Rings type="ThreeDots" color="#0b69ff" height="50" width="50" />
     </div>
-  )
+  );
 
-  render() {
-    const {isLoading} = this.state
-    return isLoading ? this.renderLoader() : this.renderProductsList()
-  }
-}
+  return isLoading ? renderLoader() : renderProductsList();
+};
 
-export default AllProductsSection
+export default AllProductsSection;
+
