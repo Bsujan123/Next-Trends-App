@@ -23,7 +23,7 @@ const ProductCard = props => {
       <div className="product-details">
         <div>
         <p className="price">Rs {price}/-</p>
-         <button onClick={addHandle}>ADD TO CART</button>
+         <button className ="add-button" onClick={addHandle}>ADD </button>
          </div>
         <div className="rating-container">
          
