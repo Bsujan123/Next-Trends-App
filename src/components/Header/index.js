@@ -1,12 +1,14 @@
 import {Link, withRouter} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
-import Cookies from 'js-cookie'
 
 import './index.css'
 
 const Header = props => {
+  const cart = useSelector((state) => state.cart.products)
+  console.log(cart)
   const onClickLogout = () => {
-    Cookies.remove('jwt_token')
+    
     const {history} = props
     history.replace('/login')
   }
@@ -33,7 +35,7 @@ const Header = props => {
           </li>
           <li>
             <Link to="/cart" className="nav-link">
-              Cart
+              Cart : {cart.length !==0 && <span className='cart-item'>{cart.length}</span>}
             </Link>
           </li>
         </ul>

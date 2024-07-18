@@ -14,7 +14,8 @@ import { removeProduct } from '../../redux/reducers/cartSlice';
 
 
     const removeHandle = () => {
-        
+        const indexNum = data.products.filter((item) => item.id === id)
+        console.log(indexNum)
         const filteredProducts = data.products.filter((item) => item.id !== id);
         console.log(filteredProducts)
         dispatch(removeProduct({filteredProducts,price}))

@@ -1,17 +1,21 @@
 import './index.css'
 import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/reducers/cartSlice';
+import { useState } from 'react';
 const ProductCard = props => {
   const dispatch = useDispatch();
-  
+  const [add,setAdd] = useState(false)
   
   const {productData} = props
   
   const {category,image,price,rating,title} = productData
   
   const addHandle = () => {
-    
-    dispatch(addProduct(productData))
+     if (!add){
+         dispatch(addProduct(productData))
+     }
+     setAdd(true)
+   
     
   
   }
@@ -23,7 +27,7 @@ const ProductCard = props => {
       <div className="product-details">
         <div>
         <p className="price">Rs {price}/-</p>
-         <button className ="add-button" onClick={addHandle}>ADD </button>
+         <button className ="add-button" onClick={addHandle}> {add?'ADDED':'ADD'} </button>
          </div>
         <div className="rating-container">
          
