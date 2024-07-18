@@ -1,0 +1,15 @@
+.big-container{
+    display: flex;
+    justify-content: center;
+}
+.cart-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:30px;
+    width:50%;
+}
+.image-container{
+    height:200px;
+    width:200px;
+}

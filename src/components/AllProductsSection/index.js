@@ -36,7 +36,7 @@ const AllProductsSection = () => {
     const searchResult = productsList.filter(product =>
       product.title.toLowerCase().includes(text.toLowerCase())
     );
-    console.log(productsList)
+    
 
     return (
       <>
