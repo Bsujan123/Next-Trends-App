@@ -1,6 +1,8 @@
 .big-container{
     display: flex;
     justify-content: center;
+    margin :20px;
+    
 }
 .cart-main{
     display: flex;
@@ -8,8 +10,57 @@
     justify-content: space-between;
     padding:30px;
     width:50%;
+    border-width: 5px;
+        box-shadow: 20px;
+        border-color: black;
+        background-color: rgb(222, 233, 234);
 }
 .image-container{
     height:200px;
     width:200px;
+
+}
+
+
+@media screen and (min-width: 500px) and (max-width: 991px) {
+    .image-container {
+        width: 200px;
+        height: 200px;
+        margin-left: 10px;
+        border-radius: 10px;
+
+    }
+        .cart-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+}
+
+.add-button {
+    background-color: rgb(122, 174, 174);
+    border-radius: 5px;
+    border-width: 0px;
+    width: 120px;
+    height: 30px;
+    cursor: pointer;
+
+}
+
+.add-button:hover {
+    background-color: rgb(48, 83, 83);
+    border-radius: 5px;
+    border-width: 0px;
+    width: 120px;
+    height: 30px;
+    cursor: pointer;
+    color: #ffffff
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .add-button {
+        width: 70px;
+        height: 20px;
+
+    }
 }

@@ -22,7 +22,7 @@ import { removeProduct } from '../../redux/reducers/cartSlice';
    
   return (
    
-    <div className='big-container'>
+    <div className='big-container '>
     <div className='cart-main'>
         <div >
             <img className='image-container' alt = {title} src={image}/>
@@ -31,7 +31,7 @@ import { removeProduct } from '../../redux/reducers/cartSlice';
             <p>{title}</p>
             <p>{category}</p>
             <p>{price}</p>
-            <button onClick={removeHandle}>REMOVE</button>
+            <button className='add-button' onClick={removeHandle}>REMOVE</button>
         </div>
 
       
