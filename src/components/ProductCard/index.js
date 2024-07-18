@@ -15,6 +15,7 @@ const ProductCard = props => {
          dispatch(addProduct(productData))
      }
      setAdd(true)
+     alert("Item added to cart")
    
     
   
